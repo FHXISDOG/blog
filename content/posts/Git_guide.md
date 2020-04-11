@@ -54,7 +54,7 @@ tags: ["Git"]
 
 #### 一张图概括:
 
-![](/img/Git/四度空间.png)
+![](/img/Git/4_space.png)
 
 #### 
 
@@ -188,7 +188,7 @@ Git中指针大致有五类:
 
 正常情况下HEAD指针是指向当前分支指针,如图:
 
-![](/img/Git/HEAD指向分支.jpg)
+![](/img/Git/head_pointer_branch.jpg)
 
 ### `git checkout <commit id>`
 
@@ -196,7 +196,7 @@ Git中指针大致有五类:
 
 当执行`git checkout <commit id>` 或 `git checkout HEAD^`时,进入指针分离模式,HEAD指针指向一条commit id,不再指向分支指针,此时如果提交代码,只有HEAD指针会指向新提交的commit id,而分支指针不会移动.
 
-![](/img/Git/指针分离.gif)
+![](/img/Git/deteched_head.gif)
 
 此时如果想让HEAD重新指向分支指针,执行`git checkout <branch name>`即可.
 

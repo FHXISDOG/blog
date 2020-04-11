@@ -2,6 +2,8 @@
 title: "Arch安装记录"
 date: 2020-04-10T10:26:30+08:00
 draft: false
+categories: ["linux"]
+tags: ["Arch","linux"]
 ---
 
 >  本文记录本人安装Arch的过程以及后续配置,不做为教程,只作为备忘使用,仅供参考
@@ -22,15 +24,15 @@ draft: false
 
 `MBR`:
 
-![](/static/img/ArchInstallMBR_START.gif)
+![](/img/ArchInstall/MBR_START.gif)
 
 `UEFI`:
 
-![](/static/img/ArchInstallUEFI_START.gif)
+![](/img/ArchInstall/UEFI_START.gif)
 
 当屏幕上出现命令行提示符及闪烁的光标时即启动完毕。
 
-![](/static/img/ArchInstallstart_orver.gif)
+![](/img/ArchInstall/start_orver.gif)
 
 ### 检查引导方式
 
