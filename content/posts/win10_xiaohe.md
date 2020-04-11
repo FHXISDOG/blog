@@ -1,5 +1,5 @@
 ---
-title: "Win10_xiaohe"
+title: "win10自带输入法添加小鹤双拼"
 date: 2020-04-11T16:53:23+08:00
 draft: false
 categories: ["tips"]
@@ -22,8 +22,4 @@ tags: ["tips"]
 
 控制面板--时间和语言--语言--拼写，输入和键盘设置--高级键盘设置--允许我为每个应用窗口使用不同的输入法 -- 打勾
 
-
-
 > 参考连接:[Win10 微软拼音添加小鹤双拼以及其他配置](https://ifttl.com/add-flypy-to-win10-microsoft-pinyin-and-other-configuration)
-
-
