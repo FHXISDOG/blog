@@ -22,15 +22,15 @@ draft: false
 
 `MBR`:
 
-![](D:\data\nutstore\blog\static\img\ArchInstall\MBR_START.gif)
+![](/static/img/ArchInstallMBR_START.gif)
 
 `UEFI`:
 
-![](D:\data\nutstore\blog\static\img\ArchInstall\UEFI_START.gif)
+![](/static/img/ArchInstallUEFI_START.gif)
 
 当屏幕上出现命令行提示符及闪烁的光标时即启动完毕。
 
-![](D:\data\nutstore\blog\static\img\ArchInstall\start_orver.gif)
+![](/static/img/ArchInstallstart_orver.gif)
 
 ### 检查引导方式
 
