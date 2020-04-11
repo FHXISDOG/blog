@@ -1,3 +1,6 @@
 [submodule "public"]
 	path = public
 	url = git@github.com:FHXISDOG/fhxisdog.github.io.git
+[submodule ".\\themes\\pure"]
+	path = .\\themes\\pure
+	url = git@github.com:FHXISDOG/hugo-theme-pure.git
