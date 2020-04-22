@@ -13,7 +13,6 @@ tags: ["maven","java"]
 ```shell
 [exec] [ERROR]   The project com.acme:test:0.0.1-SNAPSHOT (/home/acme/pom.xml) has 1 error
 [exec] [ERROR]     Non-resolvable parent POM: Failure to find com.acme.maven:parent-pom:pom:2 in http://repo.maven.apache.org/maven2 was cached in the local repository, resolution will not be reattempted until the update interval of central has elapsed or updates are forced and 'parent.relativePath' points at no local POM @ line 5, column 13 -> [Help 2]
-
 ```
 
 ## 解决方案
@@ -29,5 +28,3 @@ Maven使用`_remote.repositories`文件存储本地jar对应的远程仓库源�
 > [maven-cant-find-my-local-artifacts](https://stackoverflow.com/questions/16866978/maven-cant-find-my-local-artifacts)
 > 
 > [remote-repositories-prevents-maven-from-resolving-remote-parent](https://stackoverflow.com/questions/32571400/remote-repositories-prevents-maven-from-resolving-remote-parent)
-
-
