@@ -43,7 +43,7 @@ ls /sys/firmware/efi/efivars
 如果提示:
 
 ```shell
-如果提示
+ls: cannot access '/sys/firmware/efi/efivars': No such file or directory
 ```
 
 表明你是以`BIOS`方式引导，否则为以`EFI`方式引导
@@ -189,7 +189,6 @@ Changed type of partition to 'EFI System'
 ```shell
 mkfs.fat -F32 /dev/nvme0n1p1 #请将nvme0n1p1替换为刚创建的引导分区 这里我的分区名是 /dev/nvme0n1p1
 
-
 mkfs.ext4 /dev/nvme0n1p2     #请将的nvme0n1p2替换为刚创建的分区 这里我的分区名是`/dev/nvme0n1p2`
 ```
 
@@ -206,7 +205,7 @@ mount /dev/nvme0n1p1 /mnt #这里是MBR的根分区,注意别搞混了,上面的
 ```shell
 mount /dev/nvme0n1p2 /mnt #挂在根分区
 mkdir /mnt/boot
-mount /dev/sdxY /mnt/boot #上面的efi中 /dev/nvme0n1p1是引导分区
+mount /dev/nvme0n1p1 /mnt/boot #上面的efi中 /dev/nvme0n1p1是引导分区
 ```
 
 #### 选择镜像源
@@ -451,6 +450,7 @@ vim /boot/grub/grub.cfg
 
 ```shell
 cd /boot
+
 ls
 ```
 
@@ -635,21 +635,17 @@ reboot
 
 来重启你的电脑。
 
-重启以后输入你**刚创建的用户名与密码**来登录。注意登录后要重新进行联网操作。
+重启以后输入你**刚创建的用户名与密码**来登录。注意登录后要重新进行联网操作(`sudo dhcpcd`)。
 
 ### 图形界面的安装
 
-#### 安装集显:
+#### 安装集显与桌面环境以及启动器:
 
 ```shell
-sudo pacman -S xf86-video-intel
+sudo pacman -S xf86-video-intel xorg palsma sddm kconsole
 ```
 
-#### 安装`Xorg`,桌面环境(我这里安装的是`KDE`),`SDDM`
 
-```shell
-sudo pacman -S xorg plasma kde-applications sddm
-```
 
 #### 设置开机启动服务和网络
 
@@ -659,14 +655,15 @@ sudo systemctl enable sddm #设置开机启动sddm
 sudo systemctl disable netctl #配置网络
 
 sudo systemctl enable NetworkManager #注意大小写
+
 sudo pacman -S network-manager-applet #安装工具栏工具来显示网络设置图标
 ```
 
 重启后即可进入桌面环境
 
-#### 设置中国源
+#### 设置中国源（如果不需要可以不设置)
 
-升级系统到最新  
+升级系统到最新
 
 ```html
 sudo pacman -Syyu
@@ -717,23 +714,121 @@ sudo pacman -S wqy-zenhei
 sudo pacman -S wqy-microhei
 ```
 
-编辑 `~/.xprofile`或`~/.xinitrc`:
+编辑 `~/.xprofile`或`~/.xinitrc`或`/etc/profile`（如果不需要系统语言是中文可以不设置):
 
 ```shell
 export LANG=zh_CN.UTF-8
 export LANGUAGE=zh_CN:en_US
 ```
 
+#### 安装输入法
+
+##### 安装`fcitx`
+
+```shell
+sudo pacman -S fcitx fcitx-configtool fcitx-libpinyin
+```
+
+##### 配置环境变量
+
+编辑`/etc/profile`(也可以设置`~/.pam_enviroment`，但是只设置`~/.pam_enviroment`会导致emacs不能使用输入法):
+```shell
+GTK_IM_MODULE=fcitx
+QT_IM_MODULE=fcitx
+XMODIFIERS=@im=fcitx
+
+```
+
+### 安装git并设置代理
+
+```shell
+sudo pacman -S git 
+```
+设置代理
+```shell
+git config --global https.proxy http://127.0.0.1:1080 # 如果你的代理是http
+
+git config --global http.proxy http://127.0.0.1:1080
+
+
+git config --global https.proxy socks5://127.0.0.1:1080
+
+git config --global http.proxy socks5://127.0.0.1:1080 #如果你的代理是socks5
+```
+取消代理
+
+```shell
+git config --global --unset http.proxy
+
+git config --global --unset https.proxy
+
+```
+#### 安装yay
+
+##### 安装`git`和`base-devel` 和 `go`
+
+```shell
+sudo pacman -S git base-devel go
+
+```
+
+##### 由于yay需要go的module,由于我大清国情，需要设置下go的proxy
+
+```shell
+go env -w GO111MODULE=on
+go env -w GOPROXY="https://goproxy.io,direct" 
+```
+##### 下载快照并安装
+
+```shell
+mkdir -P temp/yay
+
+cd temp/yay
+
+git clone https://aur/archlinux.org/yay.git
+
+makepkg si
+```
+
+设置清华源:
+```shell
+yay --aururl "https://aur.tuna.tsinghua.edu.cn" --save
+
+yay -P -g     #查看配置
+```
+
+
+#### 安装wps
+
+```shell
+yay  -S wps-office ttf-wps-fonts
+```
+#### 安装oh-my-zsh
+
+```shell
+sudo pacman -S zsh
+```
+
+安装[oh-my-zsh](https://ohmyz.sh/):
+
+```shell
+sudo pacman -S sh 
+
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"  #如果不行，把install.sh下载下来手动执行sh -c
+```
+
+
+
 重启即可
 
 ## 参考连接:
 
-> [Archlinux从安装到基本配置]([https://www.joxrays.com/archlinux-configure/](https://www.joxrays.com/archlinux-configure/))
+> [Archlinux从安装到基本配置](https://www.joxrays.com/archlinux-configure/)
 > 
-> [以官方Wiki的方式安装ArchLinux]([https://www.viseator.com/2017/05/17/arch_install/](https://www.viseator.com/2017/05/17/arch_install/))
+> [以官方Wiki的方式安装ArchLinux](https://www.viseator.com/2017/05/17/arch_install/)
 > 
-> [ArchLinux安装后的必须配置与图形界面安装教程]([https://www.viseator.com/2017/05/19/arch_setup/](https://www.viseator.com/2017/05/19/arch_setup/))
+> [ArchLinux安装后的必须配置与图形界面安装教程](https://www.viseator.com/2017/05/19/arch_setup/)
 > 
-> [Arch Linux 安装指南[2019.12.01]](https://bbs.archlinuxcn.org/viewtopic.php?id=1037)
+> [Arch Linux 安装指南 2019.12.01](https://bbs.archlinuxcn.org/viewtopic.php?id=1037)
 > 
 > [女生程序员教你15分钟安装Arch Linux](https://zhuanlan.zhihu.com/p/113615452)

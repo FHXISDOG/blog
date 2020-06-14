@@ -92,7 +92,7 @@ params:
     enabled: true # Whether to show profile bar
     avatar: hj.jpg
     gravatar: # Gravatar email address, if you enable Gravatar, your avatar config will be overriden
-    author: FHXISDOG
+    author: Fingerr
     author_title: just for fun
     author_description: Good Good Study, Day Day Up~
     location: GuangZhou, China
